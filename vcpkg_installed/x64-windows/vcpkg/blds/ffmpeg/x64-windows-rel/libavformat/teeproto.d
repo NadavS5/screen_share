@@ -1,0 +1,13 @@
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/avstring.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/attributes.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/dict.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/error.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/macros.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-rel/libavutil/avconfig.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/mem.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavformat/tee_common.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavformat/url.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavformat/avio.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/log.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/version.h
+libavformat/teeproto.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavformat/version_major.h

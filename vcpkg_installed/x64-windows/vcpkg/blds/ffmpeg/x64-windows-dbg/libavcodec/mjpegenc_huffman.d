@@ -1,0 +1,9 @@
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/avassert.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-dbg/config.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/log.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/attributes.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/version.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/macros.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-dbg/libavutil/avconfig.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/qsort.h
+libavcodec/mjpegenc_huffman.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavcodec/mjpegenc_huffman.h

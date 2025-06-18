@@ -1,0 +1,17 @@
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-dbg/config.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavcodec/celp_filters.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/avassert.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/log.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/attributes.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/version.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/macros.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-dbg/libavutil/avconfig.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/common.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/error.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/intmath.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/x86/intmath.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/internal.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/libm.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/intfloat.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/mathematics.h
+libavcodec/celp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/rational.h

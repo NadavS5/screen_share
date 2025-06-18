@@ -1,0 +1,17 @@
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-rel/config.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/avassert.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/log.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/attributes.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/version.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/macros.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-rel/libavutil/avconfig.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/common.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/error.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/intmath.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/x86/intmath.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/internal.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/libm.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/intfloat.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/mathematics.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/rational.h
+libavcodec/acelp_filters.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavcodec/acelp_filters.h

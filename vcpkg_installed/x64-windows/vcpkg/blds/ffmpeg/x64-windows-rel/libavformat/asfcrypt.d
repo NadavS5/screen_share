@@ -1,0 +1,11 @@
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/bswap.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-rel/libavutil/avconfig.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/attributes.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/x64-windows-rel/config.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/x86/bswap.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/des.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/intreadwrite.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/x86/intreadwrite.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/mem.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavutil/rc4.h
+libavformat/asfcrypt.o: C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/ffmpeg/src/n7.1.1-07cb3aa68a.clean/libavformat/asfcrypt.h

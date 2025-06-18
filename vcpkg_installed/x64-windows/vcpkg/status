@@ -1,0 +1,74 @@
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 2ce24582edc23bd36e0254aeda526262c0afec0a3650ebc95b772e4bbdf8231c
+Status: install ok installed
+
+Package: vcpkg-cmake-get-vars
+Version: 2024-09-22
+Depends: vcpkg-cmake
+Architecture: x64-windows
+Multi-Arch: same
+Abi: ec55cc47400f2f4257f957cb1e060bd9e15d3257520be38500e44d37dc29e7f5
+Status: install ok installed
+
+Package: vcpkg-tool-meson
+Version: 1.6.1
+Depends: vcpkg-cmake-get-vars
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 444ddbf12bc7f7d4d9089c792f18faa24c9f533b382a91be528995a328734354
+Description: Meson build system
+Status: install ok installed
+
+Package: pkgconf
+Version: 2.4.3
+Depends: vcpkg-tool-meson
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7e0ac9a8d2c87854feb418f12fccf520e65fcf5f7bbbf162b5c4a4359f1d5ffb
+Description: pkgconf is a program which helps to configure compiler and linker flags for development libraries. It is similar to pkg-config from freedesktop.org.
+Status: install ok installed
+
+Package: vcpkg-pkgconfig-get-modules
+Version: 2024-04-03
+Depends: pkgconf
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 1ea24f7fa328192b2875e92626fc26f2dbd0f794b9e85962bf296af7f735321f
+Status: install ok installed
+
+Package: ffmpeg
+Version: 7.1.1
+Port-Version: 1
+Depends: vcpkg-cmake-get-vars, vcpkg-pkgconfig-get-modules
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c7dc49430fdd092a1fd003189ccf7f194010de9058adff0f862d3cbfc4884a53
+Description: A library to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created.
+    FFmpeg is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created. It supports the most obscure ancient formats up to the cutting edge. No matter if they were designed by some standards committee, the community or a corporation. It is also highly portable: FFmpeg compiles, runs, and passes our testing infrastructure FATE across Linux, Mac OS X, Microsoft Windows, the BSDs, Solaris, etc. under a wide variety of build environments, machine architectures, and configurations.
+Default-Features: avcodec, avdevice, avfilter, avformat, swresample, swscale
+Status: install ok installed
+
+Package: ffmpeg
+Feature: avcodec
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build the avcodec library
+Status: install ok installed
+
+Package: ffmpeg
+Feature: avdevice
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build the avdevice library
+Status: install ok installed
+
+Package: ffmpeg
+Feature: avformat
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build the avformat library
+Status: install ok installed
+

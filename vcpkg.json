@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+    {
+     "name": "ffmpeg",
+      "default-features": false,
+      "features": [ "avdevice" ]
+    }
+  ]
+}
