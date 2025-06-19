@@ -15,8 +15,8 @@ int main(int argc, char* argv) {
     Window win;
     win.Update();
     SDL_Color c = { 0,0,255,255 };
-    win.Fill(&c);
-    win.Update();
+    /*win.Fill(&c);
+    win.Update();*/
     SDL_Event e;
     Stream s("192.168.0.231", 8999);
 

@@ -20,12 +20,12 @@ Window::Window()
     }
 
     this->window = win;
-    //this->window_surface = SDL_GetWindowSurface(win);
+    //this->window_surface =    (win);
     /*if (window_surface == NULL) {
         std::cerr << "SDL_GetWindowSurface failed: " << SDL_GetError() << "\n";
         return;
     }*/
-    this->renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_TARGETTEXTURE);
+    this->renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == NULL) {
         std::cerr << "SDL_CreateRenderer failed: " << SDL_GetError() << "\n";
         return;
