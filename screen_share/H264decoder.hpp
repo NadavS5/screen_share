@@ -12,7 +12,7 @@ class H264deocder {
 public:
 	H264deocder();
 	~H264deocder();
-	uint8_t* decode(uint8_t* iEncodedData, int iSize);
+	AVFrame* decode(uint8_t* iEncodedData, int iSize);
 private:
 	
 	AVCodecContext* context; 

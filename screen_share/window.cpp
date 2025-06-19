@@ -3,35 +3,45 @@
 
 #include "window.hpp"
 
-Window::Window() {
-
+Window::Window()
+    : window(nullptr), renderer(nullptr), texture(nullptr), window_surface(nullptr) // <- fix here
+{
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cerr << "Failed to initialize the SDL2 library\n";
         return;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Screen Share Client", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, 0);
-    
+    SDL_Window* win = SDL_CreateWindow("Screen Share Client", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080, SDL_WINDOW_SHOWN);
 
-    if (!window) {
+    if (!win) {
         std::cerr << "Failed to create window" << std::endl;
         return;
     }
-    this->window = window;
 
-    SDL_Surface* window_surface = SDL_GetWindowSurface(window);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+    this->window = win;
+    //this->window_surface = SDL_GetWindowSurface(win);
+    /*if (window_surface == NULL) {
+        std::cerr << "SDL_GetWindowSurface failed: " << SDL_GetError() << "\n";
+        return;
+    }*/
+    this->renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_TARGETTEXTURE);
+    if (renderer == NULL) {
+        std::cerr << "SDL_CreateRenderer failed: " << SDL_GetError() << "\n";
+        return;
+    }
+    // Example using the window surface
+    this->texture= SDL_CreateTexture(renderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_TARGET, 1920, 1080);
+    //this->texture = SDL_CreateTextureFromSurface(renderer, window_surface);
+    if (texture == NULL) {
+        std::cerr << "SDL_CreateTextureFromSurface failed: " << SDL_GetError() << "\n";
 
-    //SDL_PIXELFORMAT_IYUV because thats the h264 color format
-    SDL_Texture* buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
-    this->window_surface = window_surface;
-    this->renderer = renderer;
-    this->texture = buffer;
+        return;
+    }
 }
 Window::~Window() {}
 void Window::Update() {
-    SDL_UpdateWindowSurface(this->window);
+    //SDL_UpdateWindowSurface(this->window);
 }
 void Window::Fill(SDL_Color* color) {
 
@@ -50,20 +60,30 @@ void Window::Fill(SDL_Color* color) {
         std::cerr << "Error:" << SDL_GetError() << "\n";
     }
 }
-void Window::DrawFrame(uint8_t* buffer) {
-    // the pixel format should be SDL_PIXELFORMAT_IYUV
+void Window::DrawFrame(AVFrame* frame) {
+    if (frame == nullptr) {
+        std::cerr << "Error: Decoded frame is null.\n";
+        return;
+    }
+    
     int w, h;
     SDL_GetWindowSize(this->window, &w, &h);
 
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = w;
-    r.h = h;
-    
+    SDL_Rect r = { 0, 0, w, h };
 
-    SDL_UpdateTexture(texture, &r,buffer, w);
-    SDL_RenderCopy(renderer, texture, &r, &r);
+    std::cout << (this->texture == nullptr) << std::endl;
+    int ret = SDL_UpdateYUVTexture(
+    texture, &r,
+    frame->data[0], frame->linesize[0], // Y plane
+    frame->data[1], frame->linesize[1], // U plane
+    frame->data[2], frame->linesize[2]  // V plane
+    );
+    if (ret < 0) {
+        std::cerr << "SDL_UpdateYUVTexture failed: " << SDL_GetError() << "\n";
+        
+        return;
+    }
+
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
-
 }

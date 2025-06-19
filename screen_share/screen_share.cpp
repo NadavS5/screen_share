@@ -18,7 +18,7 @@ int main(int argc, char* argv) {
     win.Fill(&c);
     win.Update();
     SDL_Event e;
-    Stream s("127.0.0.1", 8999);
+    Stream s("192.168.0.231", 8999);
 
     H264deocder decoder;
     bool running = true;
@@ -33,7 +33,7 @@ int main(int argc, char* argv) {
             switch (e.window.event) {
 
             case SDL_WINDOWEVENT_CLOSE:   // exit game
-                return;
+                running = false;
                 break;
 
             default:
@@ -41,11 +41,18 @@ int main(int argc, char* argv) {
             }
             break;
         }
-        std::vector<char> encodedFrame= s.RecvBySize();
-        uint8_t* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.size());
-        win.DrawFrame(frame);
-        win.Update();
+        if(running){
+            std::vector<char> encodedFrame = s.RecvBySize();
+            //std::cout << "1\n";
+            AVFrame* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.capacity());
+            win.DrawFrame(frame);
+            
+            win.Update();
+
+        }
+        
         
     }
     std::cout << "Exiting..." << std::endl;
+    return 0;
 }

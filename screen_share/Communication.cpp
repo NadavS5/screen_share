@@ -40,19 +40,17 @@ Stream::~Stream() {
 std::vector<char> Stream::RecvBySize() {
     
 
-    static char sizeHeader[RECV_SIZE_FIELD];
+    char sizeHeader[RECV_SIZE_FIELD];
     recv(mSocket, sizeHeader, RECV_SIZE_FIELD, 0);
 
-    static uint32_t rawSize = std::bit_cast<uint32_t>(sizeHeader);  // Safe reinterpretation
-    static int size = ntohl(rawSize);
+    uint32_t rawSize = std::bit_cast<uint32_t>(sizeHeader);  // Safe reinterpretation
+    int size = ntohl(rawSize);
     //std::cout << "recieving " << size << std::endl;
     std::vector<char> data(size);
-
+    std::cout << "size: " << size << "data.size()" << data.size() << std::endl;
     while (size != 0) {
-        std::cout << "size" << size << std::endl;
-        size -= recv(mSocket, data.data(), size, 0);
+        size -= recv(mSocket, data.data() + data.size() - size, size, 0);
     }
-
     return data;
 }
 void Stream::SendBySize(char* data, int size) {

@@ -3,7 +3,7 @@
     {
      "name": "ffmpeg",
       "default-features": false,
-      "features": [ "avdevice", "swscale" ]
+      "features": [ "avdevice" ]
     }
   ]
 }

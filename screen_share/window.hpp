@@ -1,5 +1,8 @@
-#include <SDL.h>
+extern "C" {
+	#include <libavcodec/avcodec.h>
 
+}
+#include <SDL.h>
 #define COLOR_FORMAT SDL_PIXELFORMAT_RGBA8888
 
 class Window {
@@ -7,7 +10,7 @@ public:
 	Window();
 	~Window();
 	void Update();
-	void DrawFrame(uint8_t* buffer);
+	void DrawFrame(AVFrame* frame);
 	void Fill(SDL_Color* color);
 private:
 	SDL_Window* window;
