@@ -1,2 +1,0 @@
-C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/pkgconf/x64-windows-dbg/CMakeFiles/edit_cache.dir
-C:/Users/elect/source/repos/screen_share/vcpkg_installed/x64-windows/vcpkg/blds/pkgconf/x64-windows-dbg/CMakeFiles/rebuild_cache.dir
