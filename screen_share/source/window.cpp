@@ -22,12 +22,10 @@ Window::Window() {
 
     SDL_Surface* window_surface = SDL_GetWindowSurface(window);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
-    //SDL_PIXELFORMAT_IYUV because thats the h264 color format
-    SDL_Texture* buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
+    SDL_Texture* buffer = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
     this->window_surface = window_surface;
     this->renderer = renderer;
-    this->texture = buffer;
+    this->buffer = buffer;
 }
 Window::~Window() {}
 void Window::Update() {
@@ -47,23 +45,6 @@ void Window::Fill(SDL_Color* color) {
     r.w = w;
     r.h = h;
     if (SDL_FillRect(this->window_surface, &r, c) !=0) {
-        std::cerr << "Error:" << SDL_GetError() << "\n";
+        std::cerr << "Error:" << ((int)SDL_GetError()) << "\n";
     }
-}
-void Window::DrawFrame(uint8_t* buffer) {
-    // the pixel format should be SDL_PIXELFORMAT_IYUV
-    int w, h;
-    SDL_GetWindowSize(this->window, &w, &h);
-
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = w;
-    r.h = h;
-    
-
-    SDL_UpdateTexture(texture, &r,buffer, w);
-    SDL_RenderCopy(renderer, texture, &r, &r);
-    SDL_RenderPresent(renderer);
-
 }

@@ -18,11 +18,23 @@
     <ClCompile Include="screen_share.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Communication.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="H264decoder.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
     <ClCompile Include="window.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Communication.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="H264decoder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

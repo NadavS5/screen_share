@@ -7,11 +7,11 @@ public:
 	Window();
 	~Window();
 	void Update();
-	void DrawFrame(uint8_t* buffer);
+	void DrawImage(int* buffer);
 	void Fill(SDL_Color* color);
 private:
 	SDL_Window* window;
 	SDL_Surface* window_surface;
 	SDL_Renderer* renderer;
-	SDL_Texture* texture;
+	SDL_Texture* buffer;
 };

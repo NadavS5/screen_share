@@ -5,10 +5,8 @@
 #include "window.hpp"
 #include <thread>
 
-extern "C" {
-#include <libavcodec/avcodec.h>
-#include <libavutil/avutil.h>
-}
+#include "Communication.hpp"
+#include "H264decoder.hpp"
 
 int main(int argc, char* argv) {
 	SDL_SetMainReady();
@@ -16,13 +14,38 @@ int main(int argc, char* argv) {
     
     Window win;
     win.Update();
-
+    SDL_Color c = { 0,0,255,255 };
+    win.Fill(&c);
+    win.Update();
     SDL_Event e;
-    while (SDL_PollEvent(&e) > 0){
-        switch (e.type){
+    Stream s("127.0.0.1", 8999);
+
+    H264deocder decoder;
+    bool running = true;
+    while(running){
+        SDL_PollEvent(&e);
+
+        switch (e.type) {
         case SDL_QUIT:
             break;
-        }
-    }
+            
+        case SDL_WINDOWEVENT:
+            switch (e.window.event) {
 
+            case SDL_WINDOWEVENT_CLOSE:   // exit game
+                return;
+                break;
+
+            default:
+                break;
+            }
+            break;
+        }
+        std::vector<char> encodedFrame= s.RecvBySize();
+        uint8_t* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.size());
+        win.DrawFrame(frame);
+        win.Update();
+        
+    }
+    std::cout << "Exiting..." << std::endl;
 }
