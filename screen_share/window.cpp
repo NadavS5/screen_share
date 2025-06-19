@@ -20,8 +20,8 @@ Window::Window()
     }
 
     this->window = win;
-    //this->window_surface =    (win);
-    /*if (window_surface == NULL) {
+    /*this->window_surface = SDL_GetWindowSurface(win);
+    if (window_surface == NULL) {
         std::cerr << "SDL_GetWindowSurface failed: " << SDL_GetError() << "\n";
         return;
     }*/
@@ -44,22 +44,13 @@ void Window::Update() {
     //SDL_UpdateWindowSurface(this->window);
 }
 void Window::Fill(SDL_Color* color) {
+    SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, color->a);
+    SDL_RenderClear(renderer);  // fills the entire screen with the draw color
+    SDL_RenderPresent(renderer);
 
-    Uint32 c = SDL_MapRGBA(this->window_surface->format, color->r, color->g, color->b, color->a);
-
-    int w, h;
-    SDL_GetWindowSize(this->window, &w,&h);
-
-
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = w;
-    r.h = h;
-    if (SDL_FillRect(this->window_surface, &r, c) !=0) {
-        std::cerr << "Error:" << SDL_GetError() << "\n";
-    }
 }
+
+
 void Window::DrawFrame(AVFrame* frame) {
     if (frame == nullptr) {
         std::cerr << "Error: Decoded frame is null.\n";
