@@ -19,7 +19,6 @@ int main(int argc, char* argv) {
     win.Update();
     SDL_Event e;
     Stream s("192.168.0.231", 8999);
-
     H264deocder decoder;
     bool running = true;
     while(running){
@@ -43,11 +42,16 @@ int main(int argc, char* argv) {
         }
         if(running){
             std::vector<char> encodedFrame = s.RecvBySize();
-            //std::cout << "1\n";
+            if (encodedFrame.capacity() == 0) {
+                continue;
+            }
             AVFrame* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.capacity());
-            win.DrawFrame(frame);
+            if (frame != nullptr) {
+                win.DrawFrame(frame);
+
+                win.Update();
+            }
             
-            win.Update();
 
         }
         

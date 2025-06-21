@@ -3,7 +3,7 @@
     {
      "name": "ffmpeg",
       "default-features": false,
-      "features": [ "avdevice" ]
+      "features": [ "avdevice", "nvcodec" ]
     }
   ]
 }

@@ -13,11 +13,14 @@ public:
 	H264deocder();
 	~H264deocder();
 	AVFrame* decode(uint8_t* iEncodedData, int iSize);
+	bool want_more_packet = false;
 private:
 	
 	AVCodecContext* context; 
 	AVPacket* packet;
 	AVFrame* frame;
+	AVBufferRef* hw_device_ctx;
+	
 };
 static void send(AVCodecContext* iContext, AVPacket* iPacket);
 static void receive(AVCodecContext* iContext, AVFrame* iFrame);

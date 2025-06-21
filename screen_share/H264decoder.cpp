@@ -3,22 +3,30 @@
 // Forward declare static functions
 static int send_packet(AVCodecContext* context, AVPacket* packet);
 static int receive_frame(AVCodecContext* context, AVFrame* frame);
+static enum AVPixelFormat get_hw_format(AVCodecContext* ctx, const enum AVPixelFormat* pix_fmts) {
+    (void)ctx, (void)pix_fmts;
+    return AV_PIX_FMT_NV12;
+}
 
 H264deocder::H264deocder() {
-    const AVCodec* codec = avcodec_find_decoder(AV_CODEC_ID_H264);
+    const AVCodec* codec = avcodec_find_decoder_by_name("h264_cuvid");
     if (!codec) {
         std::cerr << "ERROR: H264 decoder not found.\n";
         exit(1);
     }
+    
 
     this->context = avcodec_alloc_context3(codec);
     if (!this->context) {
         std::cerr << "ERROR: Cannot allocate codec context.\n";
         exit(1);
     }
-
-    // Remove encoder-specific options - decoders don't need preset/tune
-
+    int ret = av_hwdevice_ctx_create(&hw_device_ctx, AV_HWDEVICE_TYPE_CUDA, nullptr, nullptr, 0);
+    if (ret < 0) {
+        std::cerr << "ERROR: Failed to create CUDA device context\n";
+    }
+    context->hw_device_ctx = av_buffer_ref(hw_device_ctx);
+    context->get_format = get_hw_format;
     this->packet = av_packet_alloc();
     if (!this->packet) {
         std::cerr << "ERROR: Cannot allocate packet.\n";
@@ -65,14 +73,14 @@ AVFrame* H264deocder::decode(uint8_t* encodedData, int size) {
         std::cerr << "ERROR: Failed to send packet to decoder: " << ret << "\n";
         return nullptr;
     }
-
+    
     // Receive decoded frame
     ret = receive_frame(context, frame);
     if (ret < 0) {
         if (ret == AVERROR(EAGAIN)) {
             // Need more input data
             std::cout << "null2\n";
-
+            
             return nullptr;
         }
         else if (ret == AVERROR_EOF) {

@@ -1,11 +1,26 @@
 import socket
 import struct
+import av
 DEBUG = False
+def RGB_TO_NV12(sct_img):
+    """
+    Convert BGRA to NV12 format as a flat uint8 buffer.
+    """
+    frame = av.VideoFrame.from_ndarray(sct_img, format='rgb24')
+    nv12_frame = frame.reformat(format='nv12') # PyAV handles YUV conversion, 4:2:0 subsampling, and NV12 interleaving
+    
+    nv12_data = b''
+    for plane in nv12_frame.planes: # NV12 has 2 planes (Y, UV)
+        nv12_data += bytes(plane)
+    return nv12_data
+
+   
+   
 def send(sock: socket.socket, data: bytes | bytearray):
     size = struct.pack("!I", len(data))
     sock.send(size + data)
     if DEBUG:
-         print("SENDING->",(size + data))
+         print("SENDING->",(size + data)[:100])
 
 def _recv_by_size(sock: socket.socket, size: int):
         buff = b""
@@ -27,82 +42,87 @@ def recv(sock: socket.socket) -> bytes:
          print("RECIEVED", data)
     return data
 
+
+# print(recv(client))
+# send(client, b"hello world")
+
+
+
+import numpy as np
+import PyNvVideoCodec as nvc
+import mss
+import time
+import cv2
+
+width = 1920
+height = 1920
+fps = 30
+frame_size = width * height * 1.5  # Size for NV12 format
+# Create encoder
+encoder = nvc.CreateEncoder(
+    width=width,
+    height=height,
+    fmt = "NV12",
+    format = "ABGR",
+    usecpuinputbuffer=True,
+    **{"codec":"h264","fps" : fps, "bitrate" : 5_000_000 ,"idrperiod": 10,
+        "repeatspspps": 1, "tuning_info" : "low_latency","lookahead": 0, "slice::mode": 0
+    })
+
 sock = socket.socket()
 
 sock.bind(("0.0.0.0", 8999))
 sock.listen(5)
+print("listening")
 client, addr = sock.accept()
 print("connected")
-# print(recv(client))
-# send(client, b"hello world")
-
-import av
-import mss
-import numpy as np
-import time
-
-# Screen capture size
-width, height = 1920, 1080
-
-# Setup encoder context (no file, just get packets)
-codec = av.codec.CodecContext.create('libx264', 'w')
-codec.width = width
-codec.height = height
-# codec.time_base = (1, 30)  # 30 FPS
-codec.framerate = 60
-codec.pix_fmt = 'yuv420p'
-codec.bit_rate = 4_000_000
-# Configure encoder options for better quality/performance
-codec.options = {
-    'preset': 'ultrafast',  # Fast encoding
-    'tune': 'zerolatency',  # Low latency
-    # 'crf': '23',  # Quality level (lower = better quality)
-    'maxrate': '1500k',  # Maximum bitrate
-    'bufsize': '2000k',  # Buffer size
-    'x264-params': 'repeat-headers=1'
-}   
-# stream.codec_context.options = {}
-
-# Open the codec
-codec.open()
-cnt = 0
-# Start screen capture
-with mss.mss(with_cursor=True) as sct:
-    monitor = {"top": 0, "left": 0, "width": width, "height": height}
-
-    while True:  # Just 10 frames for demo
-        sct_img = sct.grab(monitor)
-        img = np.array(sct_img)
-
-        # Convert BGRA to RGB (mss returns BGRA format)
-        img_rgb = img[..., [2, 1, 0]]  # BGR to RGB conversion
-
-        # Create VideoFrame
-        frame = av.VideoFrame.from_ndarray(img_rgb, format='rgb24')
-        frame.pts = cnt  # Set presentation timestamp
+def describe_nal(packet: bytes):
+    if len(packet) < 5: return "Too short"
+    if packet.startswith(b'\x00\x00\x00\x01'):
+        nal = packet[4]
+        types = {
+            1: "Non-IDR (P-frame)",
+            5: "IDR (I-frame)",
+            6: "SEI",
+            7: "SPS",
+            8: "PPS",
+            9: "AUD"
+        }
+        return f"NAL type {nal & 0x1F}: {types.get(nal & 0x1F, 'Unknown')}"
+    return "No Annex B start code"
+# Process input frames
+with mss.mss(with_cursor=True) as ms:
+    print("loop")
+    for i in range(1000):
+        start_time = time.time()
         
-        # Reformat to yuv420p (this is done automatically by encoder if needed)
-        # frame = frame.reformat(format='yuv420p')
-
-        # Encode and collect packets
-        packets = codec.encode(frame)
-        for packet in packets:
-            h264_bytes = bytes(packet)
-            print("sending", len(h264_bytes))
-            try: 
-                send(client, h264_bytes)
-            except:
-                print("user quit")
-                break
+        # Read raw frame data
+        bounding_box = {'top': 0, 'left': 0, 'width': width, 'height': height}
+        sc = ms.grab(bounding_box)
+        frame = np.array(sc)
+        # frame = frame[:, :, :3]              # Drop alpha channel, now BGR
+        # frame = frame[..., ::-1]             # Convert BGR to RGB
+        # # print("1")
+        argb_frame = frame[:, :, [3, 2, 1, 0]]
+        # nv12_frame = RGB_TO_NV12(frame)
+        # nv12_frame = np.ascontiguousarray(nv12_frame)
+        bitstream = encoder.Encode(argb_frame)
+        packet = bytes(bitstream)
+        # print("len:", len(packet))
         
-        # Add small delay to maintain frame rate
-        # time.sleep(1/15)
-        cnt +=1
+        if len(packet)>0:
+            
+            print(packet[:5])
+            
+            # Write encoded data to file
+            # print(f"sending frame {i}")
+            send(client, bytes(bitstream))
+            # print(describe_nal(packet))
+            # print("send")
+            elapsed = time.time() - start_time
+            sleep_time = max(0, (1.0 / fps) - elapsed)
+            time.sleep(sleep_time)
+
     # Flush encoder
-    packets = codec.encode(None)
-    for packet in packets:
-        h264_bytes = packet.to_bytes()
-        # print(f"Flushed packet ({len(h264_bytes)} bytes)")
-
-# Close the codec
-# codec.close()
+    bitstream = encoder.EndEncode()
+    # send(client, DeprecationWarning)

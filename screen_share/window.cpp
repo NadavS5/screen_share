@@ -31,11 +31,10 @@ Window::Window()
         return;
     }
     // Example using the window surface
-    this->texture= SDL_CreateTexture(renderer, SDL_PIXELFORMAT_IYUV, SDL_TEXTUREACCESS_TARGET, 1920, 1080);
+    this->texture= SDL_CreateTexture(renderer, SDL_PIXELFORMAT_NV12, SDL_TEXTUREACCESS_TARGET, 1920, 1080);
     //this->texture = SDL_CreateTextureFromSurface(renderer, window_surface);
     if (texture == NULL) {
-        std::cerr << "SDL_CreateTextureFromSurface failed: " << SDL_GetError() << "\n";
-
+        std::cerr << "SDL_CreateTexture failed: " << SDL_GetError() << "\n";
         return;
     }
 }
@@ -54,6 +53,7 @@ void Window::Fill(SDL_Color* color) {
 void Window::DrawFrame(AVFrame* frame) {
     if (frame == nullptr) {
         std::cerr << "Error: Decoded frame is null.\n";
+        exit(-1);
         return;
     }
     
@@ -63,14 +63,14 @@ void Window::DrawFrame(AVFrame* frame) {
     SDL_Rect r = { 0, 0, w, h };
 
     std::cout << (this->texture == nullptr) << std::endl;
-    int ret = SDL_UpdateYUVTexture(
-    texture, &r,
-    frame->data[0], frame->linesize[0], // Y plane
-    frame->data[1], frame->linesize[1], // U plane
-    frame->data[2], frame->linesize[2]  // V plane
+    
+    int ret = SDL_UpdateNVTexture(
+        texture, &r,
+        frame->data[0], frame->linesize[0], // Y plane
+        frame->data[1], frame->linesize[1] // U plane
     );
     if (ret < 0) {
-        std::cerr << "SDL_UpdateYUVTexture failed: " << SDL_GetError() << "\n";
+        std::cerr << "SDL_UpdateNVTexture failed: " << SDL_GetError() << "\n";
         
         return;
     }
