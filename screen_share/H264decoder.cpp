@@ -28,6 +28,9 @@ H264deocder::H264deocder() {
     context->hw_device_ctx = av_buffer_ref(hw_device_ctx);
     context->get_format = get_hw_format;
     context->colorspace = AVCOL_SPC_BT709;
+    context->flags |= AV_CODEC_FLAG_LOW_DELAY;
+    context->delay = 0;
+    
     //context->bit_rate = 5000000;
     
     this->packet = av_packet_alloc();
@@ -99,7 +102,7 @@ AVFrame* H264deocder::decode(uint8_t* encodedData, int size) {
         }
     }
 
-   */ // Return pointer to the Y plane of the decoded frame
+    // Return pointer to the Y plane of the decoded frame
     return frame;
 }
 
