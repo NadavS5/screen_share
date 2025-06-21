@@ -42,10 +42,10 @@ int main(int argc, char* argv) {
         }
         if(running){
             std::vector<char> encodedFrame = s.RecvBySize();
-            if (encodedFrame.capacity() == 0) {
+            if (encodedFrame.size() == 0) {
                 continue;
             }
-            AVFrame* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.capacity());
+            AVFrame* frame = decoder.decode((uint8_t*)encodedFrame.data(), encodedFrame.size());
             if (frame != nullptr) {
                 win.DrawFrame(frame);
 

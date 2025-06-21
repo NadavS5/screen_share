@@ -31,7 +31,7 @@ Window::Window()
         return;
     }
     // Example using the window surface
-    this->texture= SDL_CreateTexture(renderer, SDL_PIXELFORMAT_NV12, SDL_TEXTUREACCESS_TARGET, 1920, 1080);
+    this->texture= SDL_CreateTexture(renderer, SDL_PIXELFORMAT_NV12, SDL_TEXTUREACCESS_STREAMING, 1920, 1080);
     //this->texture = SDL_CreateTextureFromSurface(renderer, window_surface);
     if (texture == NULL) {
         std::cerr << "SDL_CreateTexture failed: " << SDL_GetError() << "\n";
@@ -58,23 +58,19 @@ void Window::DrawFrame(AVFrame* frame) {
     }
     
     int w, h;
-    SDL_GetWindowSize(this->window, &w, &h);
-
-    SDL_Rect r = { 0, 0, w, h };
-
-    std::cout << (this->texture == nullptr) << std::endl;
-    
+   
+    // can use NULL to update the whole screen instead of the rect
     int ret = SDL_UpdateNVTexture(
-        texture, &r,
+        texture, NULL,
         frame->data[0], frame->linesize[0], // Y plane
         frame->data[1], frame->linesize[1] // U plane
-    );
+        );
     if (ret < 0) {
         std::cerr << "SDL_UpdateNVTexture failed: " << SDL_GetError() << "\n";
         
         return;
     }
-
+    
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
 }

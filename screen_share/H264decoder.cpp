@@ -27,6 +27,9 @@ H264deocder::H264deocder() {
     }
     context->hw_device_ctx = av_buffer_ref(hw_device_ctx);
     context->get_format = get_hw_format;
+    context->colorspace = AVCOL_SPC_BT709;
+    //context->bit_rate = 5000000;
+    
     this->packet = av_packet_alloc();
     if (!this->packet) {
         std::cerr << "ERROR: Cannot allocate packet.\n";
@@ -56,6 +59,8 @@ H264deocder::~H264deocder() {
     av_frame_free(&this->frame);
     av_packet_free(&this->packet);
     avcodec_free_context(&this->context);
+    av_buffer_unref(&hw_device_ctx);
+
 }
 
 AVFrame* H264deocder::decode(uint8_t* encodedData, int size) {
@@ -64,8 +69,7 @@ AVFrame* H264deocder::decode(uint8_t* encodedData, int size) {
         return nullptr;
     }
 
-    packet->data = encodedData;
-    packet->size = size;
+    av_packet_from_data(packet, encodedData, size);
 
     // Send packet to decoder
     int ret = send_packet(context, packet);
@@ -95,7 +99,7 @@ AVFrame* H264deocder::decode(uint8_t* encodedData, int size) {
         }
     }
 
-    // Return pointer to the Y plane of the decoded frame
+   */ // Return pointer to the Y plane of the decoded frame
     return frame;
 }
 

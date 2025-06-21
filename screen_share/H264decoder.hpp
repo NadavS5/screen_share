@@ -22,5 +22,5 @@ private:
 	AVBufferRef* hw_device_ctx;
 	
 };
-static void send(AVCodecContext* iContext, AVPacket* iPacket);
-static void receive(AVCodecContext* iContext, AVFrame* iFrame);
+static int send_packet(AVCodecContext* context, AVPacket* packet);
+static int receive_frame(AVCodecContext* context, AVFrame* frame);

@@ -2,17 +2,6 @@ import socket
 import struct
 import av
 DEBUG = False
-def RGB_TO_NV12(sct_img):
-    """
-    Convert BGRA to NV12 format as a flat uint8 buffer.
-    """
-    frame = av.VideoFrame.from_ndarray(sct_img, format='rgb24')
-    nv12_frame = frame.reformat(format='nv12') # PyAV handles YUV conversion, 4:2:0 subsampling, and NV12 interleaving
-    
-    nv12_data = b''
-    for plane in nv12_frame.planes: # NV12 has 2 planes (Y, UV)
-        nv12_data += bytes(plane)
-    return nv12_data
 
    
    
@@ -53,20 +42,19 @@ import PyNvVideoCodec as nvc
 import mss
 import time
 import cv2
-
 width = 1920
-height = 1920
-fps = 30
+height = 1080
+fps = 100
 frame_size = width * height * 1.5  # Size for NV12 format
 # Create encoder
 encoder = nvc.CreateEncoder(
     width=width,
     height=height,
-    fmt = "NV12",
-    format = "ABGR",
+    fmt = "ABGR",
+    format = "NV12",
     usecpuinputbuffer=True,
-    **{"codec":"h264","fps" : fps, "bitrate" : 5_000_000 ,"idrperiod": 10,
-        "repeatspspps": 1, "tuning_info" : "low_latency","lookahead": 0, "slice::mode": 0
+    
+    **{"codec":"h264","fps" : fps,"colorspace": "bt709", "tuning_info" : "ultra_low_latency","lookahead" : 0
     })
 
 sock = socket.socket()
@@ -76,53 +64,35 @@ sock.listen(5)
 print("listening")
 client, addr = sock.accept()
 print("connected")
-def describe_nal(packet: bytes):
-    if len(packet) < 5: return "Too short"
-    if packet.startswith(b'\x00\x00\x00\x01'):
-        nal = packet[4]
-        types = {
-            1: "Non-IDR (P-frame)",
-            5: "IDR (I-frame)",
-            6: "SEI",
-            7: "SPS",
-            8: "PPS",
-            9: "AUD"
-        }
-        return f"NAL type {nal & 0x1F}: {types.get(nal & 0x1F, 'Unknown')}"
-    return "No Annex B start code"
+
 # Process input frames
 with mss.mss(with_cursor=True) as ms:
     print("loop")
-    for i in range(1000):
-        start_time = time.time()
+    while True:
         
         # Read raw frame data
-        bounding_box = {'top': 0, 'left': 0, 'width': width, 'height': height}
-        sc = ms.grab(bounding_box)
+        sc = ms.grab(ms.monitors[0])
         frame = np.array(sc)
-        # frame = frame[:, :, :3]              # Drop alpha channel, now BGR
-        # frame = frame[..., ::-1]             # Convert BGR to RGB
-        # # print("1")
-        argb_frame = frame[:, :, [3, 2, 1, 0]]
-        # nv12_frame = RGB_TO_NV12(frame)
-        # nv12_frame = np.ascontiguousarray(nv12_frame)
-        bitstream = encoder.Encode(argb_frame)
+        
+        
+        #BGRA TO ABGR
+        abgr_frame = frame[:, :, [3, 0, 1, 2]]
+        
+        #Thats because the decoder thinks we are using ABGR so here we do the inverse of ABGR to RGBA
+        abgr_frame = frame[:, :, [2,1,0,3]]
+        
+        bitstream = encoder.Encode(abgr_frame)
         packet = bytes(bitstream)
         # print("len:", len(packet))
         
-        if len(packet)>0:
-            
-            print(packet[:5])
-            
-            # Write encoded data to file
-            # print(f"sending frame {i}")
-            send(client, bytes(bitstream))
-            # print(describe_nal(packet))
-            # print("send")
-            elapsed = time.time() - start_time
-            sleep_time = max(0, (1.0 / fps) - elapsed)
-            time.sleep(sleep_time)
+        
+        # Write encoded data to file
+        # print(f"sending frame {i}")
+        send(client, bytes(bitstream))
+        # print(describe_nal(packet))
+        # print("send")
+        
 
     # Flush encoder
     bitstream = encoder.EndEncode()
-    # send(client, DeprecationWarning)
+    send(client, bytes(bitstream))
